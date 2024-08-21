@@ -32,6 +32,9 @@ public class TimePicker {
 		WebElement time = driver.findElement(By.xpath("//input[contains(@placeholder,'hh:mm aa')]"));
 		time.click();
 		time.sendKeys("09:45:AM");
+		
+		Thread.sleep(2000);
+		driver.quit();
 	}
 
 	@Test
@@ -65,6 +68,9 @@ public class TimePicker {
 				"//div[contains(@class,'MuiMultiSectionDigitalClock')]/ul[contains(@class,'MuiMultiSectionDigitalClockSection')]/li[contains(@aria-label,'"
 						+ meridium + "')]"));
 		js.executeScript("arguments[0].click()", ap);
+		
+		Thread.sleep(2000);
+		driver.quit();
 
 	}
 
@@ -94,7 +100,7 @@ public class TimePicker {
 		
 		Actions actions = new Actions(driver);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		actions.dragAndDrop(clockLine, hour).click().perform();
+		actions.click(hour).perform();
 		Thread.sleep(1400);
 		
 //		WebElement nextButton = driver.findElement(By.xpath(
@@ -110,6 +116,9 @@ public class TimePicker {
 		
 		WebElement reqTime = driver.findElement(By.xpath("//input[contains(@placeholder,'hh:mm aa')]"));
 		System.out.println("Required time is : "+reqTime.getAttribute("value"));
+		
+		Thread.sleep(2000);
+		driver.quit();
 	}
 
 }

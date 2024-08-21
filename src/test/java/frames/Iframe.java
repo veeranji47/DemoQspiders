@@ -3,6 +3,7 @@ package frames;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,7 +29,8 @@ public class Iframe {
 		driver.findElement(By.id("password")).sendKeys("Veera@123");
 		driver.findElement(By.id("submitButton")).click();
 		
-		
+		Thread.sleep(2000);
+		driver.quit();
 		
 	}
 	@Test
@@ -45,8 +47,13 @@ public class Iframe {
 		
 		WebElement frame = driver.findElement(By.xpath("//iframe[@class='w-full h-96']"));
 		driver.switchTo().frame(frame);
+		driver.findElement(By.xpath("//div[contains(@class,'form_container')][1]"));
+		driver.switchTo().frame(0);
 		
-		driver.findElement(By.id("username")).sendKeys("Admin@gmail.com");
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		WebElement name = driver.findElement(By.id("email"));
+		name.click();
+		js.executeScript("arguments[0].value='admin@gmail.com';", name);
 //		driver.findElement(By.id("password")).sendKeys("Veera@123");
 //		driver.findElement(By.id("submitButton")).click();
 		

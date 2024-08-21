@@ -82,6 +82,8 @@ public class DatePicker {
 				"//div[contains(@class,'react-datepicker__month-container')]/descendant::div[@class='react-datepicker__month']/descendant::div[contains(.,'"
 						+ date + "')]"))
 				.click();
+		Thread.sleep(2000);
+		driver.quit();
 	}
 
 	@Test
@@ -166,6 +168,9 @@ public class DatePicker {
 				"//div[contains(@class,'react-datepicker__month-container')]/descendant::div[@class='react-datepicker__month']/descendant::div[contains(.,'"
 						+ date + "')]"))
 				.click();
+		
+		Thread.sleep(2000);
+		driver.quit();
 	}
 
 	@Test
@@ -173,13 +178,19 @@ public class DatePicker {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-		driver.get("https://demoapps.qspiders.com/ui/datePick?sublist=0");
-		driver.findElement(By.xpath("//div[@class='react-datepicker-wrapper']")).click();
+		driver.get("https://demoapps.qspiders.com/ui/");
+		
+		driver.findElement(By.xpath("(//section[text()='Date & Time Picker'])")).click();
+		driver.findElement(By.xpath("(//section[text()='Date Picker'])")).click();
+		driver.findElement(By.xpath("//a[contains(@href,'iconstrigger?sublist')]")).click();
+		
+		driver.navigate().refresh();
 		// 1st datepicker
 		String month_year = "June 2023";
 		String date = "26";
 
-		driver.findElement(By.xpath("//div[@class='react-datepicker__input-container']")).click();
+		driver.findElement(By.xpath("//div[contains(@class,'relative flex')]/*[name()='svg' and @stroke='currentColor']")).click();
+		//driver.findElement(By.xpath("//div[@class='react-datepicker__input-container']")).click();
 		while (true) {
 
 			String mon_yr = driver.findElement(By.xpath("//div[contains(@class,'react-datepicker__current-month')]"))
@@ -187,24 +198,28 @@ public class DatePicker {
 			if (mon_yr.equalsIgnoreCase(month_year)) {
 				break;
 			} else {
+				Thread.sleep(800);
 				WebElement ele = driver.findElement(
 						By.xpath("//button[contains(@class,'react-datepicker') and @aria-label='Previous Month']"));
 				ele.click();
 			}
 		}
-		List<WebElement> alldt = null;
-		try {
-			alldt = driver.findElements(By.xpath("//div[contains(@class,'react-datepicker__day react-datepicker')]"));
-		} catch (StaleElementReferenceException e) {
-			System.out.println("Hi");
-		}
+	 
+		Thread.sleep(2000);
+		driver.navigate().refresh();
+		List<WebElement> alldt = driver.findElements(By.xpath("//div[contains(@class,'react-datepicker__day react-datepicker')]"));
+		
 		for (WebElement element : alldt) {
 			String dt = element.getText();
 			if (dt.equals(date)) {
 				Thread.sleep(2000);
 				element.click();
+				break;
 			}
 		}
+		
+		Thread.sleep(2000);
+		driver.quit();
 
 	}
 }
